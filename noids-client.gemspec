@@ -8,5 +8,9 @@ Gem::Specification.new do |spec|
   spec.license     = 'APACHE2'
 
   spec.files       = `git ls-files`.split($/)
+
+  spec.add_depencency = 'rest-client', '~> 1.6'
+  spec.add_depencency = 'json', '~> 1.8'
+  spec.require_paths = ['lib']
 end
 
