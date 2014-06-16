@@ -20,12 +20,12 @@ module NoidsClient
       JSON.parse(@noid_pool['close'].put '')
     end
 
-    def mint(n=1)
-      JSON.parse(@noid_pool['mint'].post '', params: {n: n})
+    def mint(this_many_ids=1)
+      JSON.parse(@noid_pool['mint'].post '', params: {n: this_many_ids})
     end
 
-    def advance_past(id)
-      JSON.parse(@noid_pool['advancePast'].post '', params: {id: id})
+    def advance_past(this_id)
+      JSON.parse(@noid_pool['advancePast'].post '', params: {id: this_id})
     end
   end
 end
