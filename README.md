@@ -1,13 +1,13 @@
-Noids-Client
-============
+NoidsClient
+===========
 
-Noids-Client provides a wrapper around the [noids server](https://github.com/dbrower/noids) REST API.
+NoidsClient provides a wrapper around the [noids server](https://github.com/dbrower/noids) REST API.
 This is the thinnest wrapper possible. Don't expect any sophisticated behavior. Nothing is cached.
 
 # Usage
 
 ```ruby
-require 'noids-client'
+require 'noids_client'
 
 noids = NoidsClient::Connection.new("localhost:13001")
 mypool = noids.new_pool("mypool", ".zdddk")
