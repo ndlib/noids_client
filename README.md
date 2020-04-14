@@ -38,50 +38,20 @@ This limitation is imposed by the server.
 
 # Setting up a noids server
 
-A noids server is not provided by this repository.
-However, for testing or experimentation it is convinent to set up a noids server, which is not difficult.
-
-## On a Mac with homebrew
-
-First install a golang environment.
-
-    brew install go
-    mkdir ~/gocode
-    export GOPATH=~/gocode
-    export PATH=$GOPATH/bin:$PATH
-
-Install the noids server:
-
-    go get https://github.com/dbrower/noids
-
-Start it, and have it keep pools in memory.
-
-    noids
-
-These pools will be lost when the server is restarted.
-To save the pools to disk use
-
-    noids -storage directory/to/use
-
-There are other options, including saving the pools to a database.
-See the documentation on the [noids server](https://github.com/dbrower/noids) page.
-
-You can test the server using `curl`.
-Note that the default port for the server to listen on is 13001.
-These commands will create a pool named 'test' which will generate ids using the template `.sddd`.
-Then 50 ids are minted, and the pool is advanced past the id `432`, so that `432` will never be minted by this pool.
-
-    curl 'http://localhost:13001/pools' -F 'name=test' -F 'template=.sddd'
-    curl 'http://localhost:13001/pools/test/mint' -F 'n=50'
-    curl 'http://localhost:13001/pools/test/advancePast' -F 'id=432'
-
-
-## On Linux
-
-Install a golang envrionment. This should be done using your package management system.
-e.g. `yum install golang`.
-Then follow the remaining steps above.
+Follow the instructions at https://github.com/ndlib/noids
 
 # Running tests
 
-You can run the test suite by `bundle exec rspec`
+You can run the test suite by `bundle exec rspec`.
+
+## Testing Noids::Client against a live noid server
+
+Open two terminals.
+
+In the **first** terminal, start a noids server (as per https://github.com/ndlib/noids).
+I have found that once I've built my noids binary, I use the following to get
+a clean state: `rm -rf ~/noid_pool; mkdir ~/noid_pool; $GOPATH/bin/noids --storage ~/noid_pool`
+
+In the **second** terminal, run `bundle exec rake test_client_against_server`.
+Each time you run the rake task, it should be against a clean noids server
+instance.
