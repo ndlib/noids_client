@@ -4,6 +4,9 @@ require 'vcr'
 
 require 'noids_client'
 
+require 'webmock'
+WebMock.enable!
+
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock

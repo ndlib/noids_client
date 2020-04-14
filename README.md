@@ -82,3 +82,6 @@ Install a golang envrionment. This should be done using your package management 
 e.g. `yum install golang`.
 Then follow the remaining steps above.
 
+# Running tests
+
+You can run the test suite by `bundle exec rspec`
