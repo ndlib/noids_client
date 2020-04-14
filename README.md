@@ -42,16 +42,24 @@ Follow the instructions at https://github.com/ndlib/noids
 
 # Running tests
 
-You can run the test suite by `bundle exec rspec`.
+You can run the test suite by `bundle exec rspec`. This will not hit a live noid
+server. The specs instead rely on recorded HTTP request/response pairs.
 
 ## Testing Noids::Client against a live noid server
 
-Open two terminals.
+First, you'll want to ensure that you've installed a noids server. Follow the
+directions over at https://github.com/ndlib/noids.
 
-In the **first** terminal, start a noids server (as per https://github.com/ndlib/noids).
-I have found that once I've built my noids binary, I use the following to get
-a clean state: `rm -rf ~/noid_pool; mkdir ~/noid_pool; $GOPATH/bin/noids --storage ~/noid_pool`
+Then run `bundle exec rake test_client_against_server`.
 
-In the **second** terminal, run `bundle exec rake test_client_against_server`.
-Each time you run the rake task, it should be against a clean noids server
-instance.
+## Upstream Integrations
+
+You can incorporate a live yet local noid server in your upstream suite.
+
+```ruby
+require 'noids_client/integration_test'
+# Note: the block will be yielded after the server has had a chance
+# to spin up
+NoidsClient::IntegrationTest::NoidServerRunner.new.run do
+  # Code to run that requires a noid server
+end
