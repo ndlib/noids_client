@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version     = NoidsClient::VERSION
   spec.summary     = 'Ruby client for a NOIDS server'
   spec.description = %q{Provides an idiomatic interface to the REST API of a noids server (see https://github.com/dbrower/noids)}
-  spec.authors     = ['Don Brower']
-  spec.email       = ['dbrower@nd.edu']
+  spec.authors     = ['Don Brower', "Jeremy Friesen"]
+  spec.email       = ['dbrower@nd.edu', "jeremy.n.friesen@gmail.com"]
   spec.license     = 'APACHE2'
 
   spec.files         = `git ls-files`.split($/)
