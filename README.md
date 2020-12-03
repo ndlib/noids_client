@@ -38,47 +38,28 @@ This limitation is imposed by the server.
 
 # Setting up a noids server
 
-A noids server is not provided by this repository.
-However, for testing or experimentation it is convinent to set up a noids server, which is not difficult.
+Follow the instructions at https://github.com/ndlib/noids
 
-## On a Mac with homebrew
+# Running tests
 
-First install a golang environment.
+You can run the test suite by `bundle exec rspec`. This will not hit a live noid
+server. The specs instead rely on recorded HTTP request/response pairs.
 
-    brew install go
-    mkdir ~/gocode
-    export GOPATH=~/gocode
-    export PATH=$GOPATH/bin:$PATH
+## Testing Noids::Client against a live noid server
 
-Install the noids server:
+First, you'll want to ensure that you've installed a noids server. Follow the
+directions over at https://github.com/ndlib/noids.
 
-    go get https://github.com/dbrower/noids
+Then run `bundle exec rake test_client_against_server`.
 
-Start it, and have it keep pools in memory.
+## Upstream Integrations
 
-    noids
+You can incorporate a live yet local noid server in your upstream suite.
 
-These pools will be lost when the server is restarted.
-To save the pools to disk use
-
-    noids -storage directory/to/use
-
-There are other options, including saving the pools to a database.
-See the documentation on the [noids server](https://github.com/dbrower/noids) page.
-
-You can test the server using `curl`.
-Note that the default port for the server to listen on is 13001.
-These commands will create a pool named 'test' which will generate ids using the template `.sddd`.
-Then 50 ids are minted, and the pool is advanced past the id `432`, so that `432` will never be minted by this pool.
-
-    curl 'http://localhost:13001/pools' -F 'name=test' -F 'template=.sddd'
-    curl 'http://localhost:13001/pools/test/mint' -F 'n=50'
-    curl 'http://localhost:13001/pools/test/advancePast' -F 'id=432'
-
-
-## On Linux
-
-Install a golang envrionment. This should be done using your package management system.
-e.g. `yum install golang`.
-Then follow the remaining steps above.
-
+```ruby
+require 'noids_client/integration_test'
+# Note: the block will be yielded after the server has had a chance
+# to spin up
+NoidsClient::IntegrationTest::NoidServerRunner.new.run do
+  # Code to run that requires a noid server
+end
